@@ -10,8 +10,9 @@ export default function Cadastro() {
           <TextInput placeholder="Nome" style={styles.input} />
         </View>
         <View style={styles.valorEEstoque}>
-          <TextInput placeholder="Valor unitário" style={styles.input} />
           <TextInput placeholder="Quantidade Estoque" style={styles.input} />
+
+          <TextInput placeholder="Valor unitário" style={styles.input} />
         </View>
         <View style={styles.valorTotal}>
           <TextInput placeholder="Valor total" style={styles.input} />
