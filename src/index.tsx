@@ -9,7 +9,7 @@ import Header from './components/Header';
 export default function src() {
   return (
     <View>
-      <Header tela="Tela inicial" />
+      <Header tela="Controle de Estoque" />
       <Busca />
       <Cadastro />
     </View>
