@@ -37,19 +37,22 @@ export default function Tabela() {
     <View style={styles.tabela}>
       <View style={styles.linha}>
         <View style={styles.blocoId}>
-          <Text>ID</Text>
+          <Text style={styles.cabecalho}>ID</Text>
         </View>
         <View style={styles.bloco}>
-          <Text>Nome</Text>
+          <Text style={styles.cabecalho}>Nome</Text>
         </View>
         <View style={styles.bloco}>
-          <Text>Valor (und)</Text>
+          <Text style={styles.cabecalho}>Valor (und)</Text>
+        </View>
+        <View style={styles.estoque}>
+          <Text style={styles.cabecalho}>Estoque</Text>
         </View>
         <View style={styles.bloco}>
-          <Text>Estoque</Text>
+          <Text style={styles.cabecalho}>Valor total</Text>
         </View>
         <View style={styles.bloco}>
-          <Text>Valor total</Text>
+          <Text style={styles.cabecalho}>Gerenciar</Text>
         </View>
       </View>
 
@@ -64,13 +67,16 @@ export default function Tabela() {
               <Text>{item.nome}</Text>
             </View>
             <View style={styles.bloco}>
-              <Text>{item.valorUnitario}</Text>
+              <Text>{`R$${item.valorUnitario}`}</Text>
             </View>
-            <View style={styles.bloco}>
+            <View style={styles.estoque}>
               <Text>{item.qttdEstoque}</Text>
             </View>
             <View style={styles.bloco}>
-              <Text>{item.valorTotal}</Text>
+              <Text>{`R$${item.valorTotal}`}</Text>
+            </View>
+            <View style={styles.bloco}>
+              <Text>Gerenciar</Text>
             </View>
           </View>
         )}
@@ -81,16 +87,22 @@ export default function Tabela() {
 
 const styles = StyleSheet.create({
   tabela: {
+    flexGrow: 1,
     marginTop: 30,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 500,
+  },
+  cabecalho: {
+    fontWeight: 'bold',
   },
   linha: {
     flexDirection: 'row',
   },
   bloco: {
     width: 80,
+    justifyContent: 'center',
+    height: 50,
     backgroundColor: 'purple',
     paddingVertical: 5,
     paddingHorizontal: 10,
@@ -98,9 +110,19 @@ const styles = StyleSheet.create({
   },
   blocoId: {
     width: 30,
+    justifyContent: 'center',
     backgroundColor: 'purple',
     paddingVertical: 5,
-    //paddingHorizontal: 10,
+    paddingLeft: 10,
+    borderWidth: 0.5,
+  },
+  estoque: {
+    width: 50,
+    justifyContent: 'center',
+    height: 50,
+    backgroundColor: 'purple',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
     borderWidth: 0.5,
   },
 });
