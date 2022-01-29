@@ -7,6 +7,7 @@ export default function Busca() {
       <TextInput
         style={styles.input}
         placeholder="Digite o produto que você procura"
+        onChangeText={() => console.warn('texto alterado')}
       />
     </View>
   );

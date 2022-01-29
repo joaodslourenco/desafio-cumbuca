@@ -3,7 +3,7 @@ import {View} from 'react-native';
 import Busca from './components/Busca';
 import Cadastro from './components/Cadastro';
 import Header from './components/Header';
-import Tabela from './components/Tabela';
+import Tabela from './components/Tabela/Tabela';
 
 // import { Container } from './styles';
 

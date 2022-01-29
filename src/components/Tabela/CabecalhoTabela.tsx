@@ -1,38 +1,7 @@
 import React from 'react';
-import {Text, View, StyleSheet, FlatList} from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
 
-const data = [
-  {
-    id: 1,
-    nome: 'PlayStation 5',
-    qttdEstoque: 8,
-    valorUnitario: 4800,
-    valorTotal: 38400,
-  },
-  {
-    id: 2,
-    nome: 'Nintendo Switch',
-    qttdEstoque: 11,
-    valorUnitario: 2700,
-    valorTotal: 29700,
-  },
-  {
-    id: 3,
-    nome: 'Steam Deck',
-    qttdEstoque: 5,
-    valorUnitario: 3150,
-    valorTotal: 15750,
-  },
-  {
-    id: 4,
-    nome: 'Xbox Series X',
-    qttdEstoque: 10,
-    valorUnitario: 4599,
-    valorTotal: 45990,
-  },
-];
-
-export default function Tabela() {
+export default function HeaderTabela() {
   return (
     <View style={styles.tabela}>
       <View style={styles.linha}>
@@ -51,43 +20,16 @@ export default function Tabela() {
         <View style={styles.bloco}>
           <Text style={styles.cabecalho}>Valor total</Text>
         </View>
-        <View style={styles.bloco}>
+        <View style={styles.blocoBotao}>
           <Text style={styles.cabecalho}>Gerenciar</Text>
         </View>
       </View>
-
-      <FlatList
-        data={data}
-        renderItem={({item}) => (
-          <View style={styles.linha}>
-            <View style={styles.blocoId}>
-              <Text>{item.id}</Text>
-            </View>
-            <View style={styles.bloco}>
-              <Text>{item.nome}</Text>
-            </View>
-            <View style={styles.bloco}>
-              <Text>{`R$${item.valorUnitario}`}</Text>
-            </View>
-            <View style={styles.estoque}>
-              <Text>{item.qttdEstoque}</Text>
-            </View>
-            <View style={styles.bloco}>
-              <Text>{`R$${item.valorTotal}`}</Text>
-            </View>
-            <View style={styles.bloco}>
-              <Text>Gerenciar</Text>
-            </View>
-          </View>
-        )}
-      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   tabela: {
-    flexGrow: 1,
     marginTop: 30,
     justifyContent: 'center',
     alignItems: 'center',
@@ -98,9 +40,10 @@ const styles = StyleSheet.create({
   },
   linha: {
     flexDirection: 'row',
+    flexGrow: 1,
   },
   bloco: {
-    width: 80,
+    width: 70,
     justifyContent: 'center',
     height: 50,
     backgroundColor: 'purple',
@@ -116,8 +59,19 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     borderWidth: 0.5,
   },
+  blocoBotao: {
+    flexDirection: 'row',
+    width: 90,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 50,
+    backgroundColor: 'purple',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderWidth: 0.5,
+  },
   estoque: {
-    width: 50,
+    width: 63,
     justifyContent: 'center',
     height: 50,
     backgroundColor: 'purple',
