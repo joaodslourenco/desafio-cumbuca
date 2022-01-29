@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import Busca from './components/Busca';
 import Cadastro from './components/Cadastro';
 import Header from './components/Header';

@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StatusBar,
-  useColorScheme,
-  StyleSheet,
-} from 'react-native';
+import {SafeAreaView, StatusBar} from 'react-native';
 import Src from './src/index';
 
 const App = () => {
