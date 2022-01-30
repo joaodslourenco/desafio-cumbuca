@@ -1,20 +1,21 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, TextInput, Button} from 'react-native';
+import useCadastroProdutos from '../../hooks/useCadastroProdutos';
 import Produto from '../../model/Produto';
 import Entrada from './Entrada';
 
 interface CadastroProps {
   produto: Produto;
+  novoProduto: (produto: Produto) => void;
 }
 
 export default function Cadastro(props: CadastroProps) {
-  const [id, setId] = useState(1);
-  const [nome, setNome] = useState(props.produto?.nome ?? '');
-  const [estoque, setEstoque] = useState(props.produto?.estoque ?? 0);
-  const [valorUnitario, setValorUnitario] = useState(
-    props.produto?.valorUnitario ?? 0,
-  );
-  const valorTotal = valorUnitario * estoque;
+  const {produtos} = useCadastroProdutos();
+  const [id, setId] = useState(produtos.length + 1);
+  const [nome, setNome] = useState('');
+  const [estoque, setEstoque] = useState('');
+  const [valorUnitario, setValorUnitario] = useState('');
+  const valorTotal = +valorUnitario * +estoque;
 
   return (
     <View>
@@ -62,6 +63,12 @@ export default function Cadastro(props: CadastroProps) {
         <View style={styles.botaoAdicionarProduto}>
           <Button
             title="Adicionar produto" /*esse botão tem que ativar o set ID +1 */
+            onPress={() => {
+              props.novoProduto?.(
+                new Produto(id, nome, +estoque, +valorUnitario, valorTotal),
+              );
+              setId(id + 1);
+            }}
           />
         </View>
       </View>

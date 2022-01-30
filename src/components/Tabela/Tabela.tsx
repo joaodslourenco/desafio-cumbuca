@@ -8,7 +8,6 @@ import {
   Alert,
   Modal,
 } from 'react-native';
-import listaProdutos from '../../data/listaProdutos';
 import Produto from '../../model/Produto';
 import HeaderTabela from './CabecalhoTabela';
 
@@ -96,7 +95,6 @@ export default function Tabela(props: TabelaProps) {
                   setModalVisivel(true);
                   setNomeProduto(item.nome);
                   setEstoqueProduto(item.estoque);
-                  console.warn(item.nome);
                 }}
               />
               <Button
