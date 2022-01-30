@@ -9,10 +9,13 @@ import {
   Modal,
 } from 'react-native';
 import listaProdutos from '../../data/listaProdutos';
+import ModalGerenciar from '../ModalGerenciar';
 import HeaderTabela from './CabecalhoTabela';
 
 export default function Tabela() {
   const [modalVisivel, setModalVisivel] = useState(false);
+  const [nomeProduto, setNomeProduto] = useState('');
+  const [estoqueProduto, setEstoqueProduto] = useState(0);
 
   function confirmarExcluirProduto(item: any) {
     Alert.alert(
@@ -42,11 +45,17 @@ export default function Tabela() {
         <View style={styles.modal}>
           <Text style={styles.modalTitulo}>Gerenciar estoque</Text>
           <View>
-            <Text>Nome do Produto</Text>
-            <Text>Quantidade estoque</Text>
+            <Text style={{textAlign: 'center'}}>{nomeProduto}</Text>
+            <Text style={{textAlign: 'center'}}>{estoqueProduto}</Text>
             <View style={styles.botoesModal}>
-              <Button title="-" />
-              <Button title="+" />
+              <Button
+                title="-"
+                onPress={() => setEstoqueProduto(estoqueProduto - 1)}
+              />
+              <Button
+                title="+"
+                onPress={() => setEstoqueProduto(estoqueProduto + 1)}
+              />
             </View>
           </View>
 
@@ -69,13 +78,20 @@ export default function Tabela() {
               <Text>{`R$${item.valorUnitario}`}</Text>
             </View>
             <View style={styles.estoque}>
-              <Text>{item.qttdEstoque}</Text>
+              <Text>{estoqueProduto}</Text>
             </View>
             <View style={styles.bloco}>
               <Text>{`R$${item.valorTotal}`}</Text>
             </View>
             <View style={styles.blocoBotao}>
-              <Button title="✏️" onPress={() => setModalVisivel(true)} />
+              <Button
+                title="✏️"
+                onPress={() => {
+                  setModalVisivel(true);
+                  setNomeProduto(item.nome);
+                  setEstoqueProduto(item.qttdEstoque);
+                }}
+              />
               <Button
                 title="🗑️"
                 onPress={() => confirmarExcluirProduto(item)}
@@ -135,8 +151,9 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
   },
   modal: {
-    margin: 20,
-    backgroundColor: 'white',
+    margin: 15,
+    height: '50%',
+    backgroundColor: '#39375B',
     borderRadius: 20,
     padding: 25,
     alignItems: 'center',
@@ -156,6 +173,7 @@ const styles = StyleSheet.create({
   },
   botoesModal: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-evenly',
+    width: 200,
   },
 });

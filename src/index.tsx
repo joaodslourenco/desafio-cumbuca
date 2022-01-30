@@ -9,7 +9,7 @@ import Tabela from './components/Tabela/Tabela';
 
 export default function src() {
   return (
-    <View>
+    <View style={styles.layout}>
       <Header tela="Controle de Estoque" />
       <Busca />
       <Cadastro />
@@ -17,3 +17,9 @@ export default function src() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  layout: {
+    backgroundColor: '#39375B',
+  },
+});
