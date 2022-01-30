@@ -9,10 +9,16 @@ import {
   Modal,
 } from 'react-native';
 import listaProdutos from '../../data/listaProdutos';
-import ModalGerenciar from '../ModalGerenciar';
+import Produto from '../../model/Produto';
 import HeaderTabela from './CabecalhoTabela';
 
-export default function Tabela() {
+interface TabelaProps {
+  produtos: Produto[];
+  produtoSelecionado: (produto: Produto) => void;
+  produtoExcluido: (produto: Produto) => void;
+}
+
+export default function Tabela(props: TabelaProps) {
   const [modalVisivel, setModalVisivel] = useState(false);
   const [nomeProduto, setNomeProduto] = useState('');
   const [estoqueProduto, setEstoqueProduto] = useState(0);
@@ -63,7 +69,7 @@ export default function Tabela() {
         </View>
       </Modal>
       <FlatList
-        data={listaProdutos}
+        data={props.produtos}
         keyExtractor={item => item.id.toString()}
         ListHeaderComponent={HeaderTabela}
         renderItem={({item}) => (
@@ -89,7 +95,8 @@ export default function Tabela() {
                 onPress={() => {
                   setModalVisivel(true);
                   setNomeProduto(item.nome);
-                  setEstoqueProduto(item.qttdEstoque);
+                  setEstoqueProduto(item.estoque);
+                  console.warn(item.nome);
                 }}
               />
               <Button
