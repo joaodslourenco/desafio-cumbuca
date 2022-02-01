@@ -83,7 +83,7 @@ export default function Tabela(props: TabelaProps) {
               <Text>{`R$${item.valorUnitario}`}</Text>
             </View>
             <View style={styles.estoque}>
-              <Text>{estoqueProduto}</Text>
+              <Text>{item.estoque}</Text>
             </View>
             <View style={styles.bloco}>
               <Text>{`R$${item.valorTotal}`}</Text>
