@@ -9,10 +9,11 @@ import {
   Modal,
 } from 'react-native';
 import Produto from '../../model/Produto';
+import ProdutoObj from '../../model/ProdutoObj';
 import HeaderTabela from './CabecalhoTabela';
 
 interface TabelaProps {
-  produtos: Produto[];
+  produtos: any;
   produtoSelecionado: (produto: Produto) => void;
   produtoExcluido: (produto: Produto) => void;
 }
@@ -69,7 +70,7 @@ export default function Tabela(props: TabelaProps) {
       </Modal>
       <FlatList
         data={props.produtos}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={(item, index) => item.id.toString()}
         ListHeaderComponent={HeaderTabela}
         renderItem={({item}) => (
           <View style={styles.linha}>
@@ -83,7 +84,7 @@ export default function Tabela(props: TabelaProps) {
               <Text>{`R$${item.valorUnitario}`}</Text>
             </View>
             <View style={styles.estoque}>
-              <Text>{estoqueProduto}</Text>
+              <Text>{item.estoque}</Text>
             </View>
             <View style={styles.bloco}>
               <Text>{`R$${item.valorTotal}`}</Text>

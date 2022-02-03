@@ -13,20 +13,6 @@ let listaProdutos = [
     valorUnitario: 2700,
     valorTotal: 29700,
   },
-  {
-    id: 3,
-    nome: 'Steam Deck',
-    qttdEstoque: 5,
-    valorUnitario: 3150,
-    valorTotal: 15750,
-  },
-  {
-    id: 4,
-    nome: 'Xbox Series X',
-    qttdEstoque: 10,
-    valorUnitario: 4599,
-    valorTotal: 45990,
-  },
 ];
 
 export default listaProdutos;

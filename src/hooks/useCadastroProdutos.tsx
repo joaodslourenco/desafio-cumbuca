@@ -1,17 +1,20 @@
 import AsyncStorageLib from '@react-native-async-storage/async-storage';
 import {useState} from 'react';
 import {Keyboard} from 'react-native';
+import listaProdutos from '../data/listaProdutos';
 
 import Produto from '../model/Produto';
+import ProdutoObj from '../model/ProdutoObj';
 
 export default function useCadastroProdutos() {
-  const listaProdutos = [
-    new Produto(1, 'Xbox Series S', 20, 2800, 56000),
-    new Produto(2, 'Xbox 360', 20, 1000, 20000),
-    new Produto(3, 'PS3', 15, 1000, 15000),
-  ];
-  const [produto, setProduto] = useState<Produto>(Produto.vazio());
-  const [produtos, setProdutos] = useState<Produto[]>(listaProdutos);
+  const [produto, setProduto] = useState({
+    id: 1,
+    nome: '',
+    estoque: 0,
+    valorUnitario: 0,
+    valorTotal: 0,
+  });
+  const [produtos, setProdutos] = useState(listaProdutos);
 
   function produtoSelecionado(produto: Produto) {
     setProduto(produto);
@@ -23,11 +26,10 @@ export default function useCadastroProdutos() {
 
   async function carregarDados() {
     const result = await AsyncStorageLib.getItem('produtos');
-    if (result !== null)
-      /* console.log(JSON.parse(result));*/ setProdutos(JSON.parse(result));
+    if (result !== null) setProdutos(JSON.parse(result));
   }
 
-  async function salvarProduto(produto: Produto) {
+  async function salvarProduto(produto: any) {
     const produtoRecebido = produto;
     const produtosAtualizados = [...produtos, produtoRecebido];
     setProdutos(produtosAtualizados);

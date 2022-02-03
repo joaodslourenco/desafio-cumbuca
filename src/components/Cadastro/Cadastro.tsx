@@ -5,8 +5,8 @@ import Produto from '../../model/Produto';
 import Entrada from './Entrada';
 
 interface CadastroProps {
-  produto: Produto;
-  novoProduto: (produto: Produto) => void;
+  produto: any;
+  salvarProduto: any;
 }
 
 export default function Cadastro(props: CadastroProps) {
@@ -64,9 +64,14 @@ export default function Cadastro(props: CadastroProps) {
           <Button
             title="Adicionar produto" /*esse botão tem que ativar o set ID +1 */
             onPress={() => {
-              props.novoProduto?.(
-                new Produto(id, nome, +estoque, +valorUnitario, valorTotal),
-              );
+              const novoProduto = {
+                id: id,
+                nome: nome,
+                estoque: estoque,
+                valorUnitario: valorUnitario,
+                valorTotal: valorTotal,
+              };
+              props.salvarProduto(novoProduto);
               setId(id + 1);
             }}
           />

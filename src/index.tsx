@@ -1,3 +1,4 @@
+import AsyncStorageLib from '@react-native-async-storage/async-storage';
 import React, {useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import Busca from './components/Busca';
@@ -16,15 +17,20 @@ export default function src() {
     carregarDados,
   } = useCadastroProdutos();
 
+  async function clearAll() {
+    await AsyncStorageLib.clear();
+  }
+
+  clearAll();
   useEffect(() => {
     carregarDados();
-  }, [produtos]);
+  }, []);
 
   return (
     <View style={styles.layout}>
       <Header tela="Controle de Estoque" />
       <Busca />
-      <Cadastro produto={produto} novoProduto={salvarProduto} />
+      <Cadastro produto={produto} salvarProduto={salvarProduto} />
       <Tabela
         produtos={produtos}
         produtoSelecionado={produtoSelecionado}
