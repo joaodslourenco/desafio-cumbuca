@@ -1,4 +1,6 @@
+import AsyncStorageLib from '@react-native-async-storage/async-storage';
 import {useState} from 'react';
+import {Keyboard} from 'react-native';
 
 import Produto from '../model/Produto';
 
@@ -19,12 +21,43 @@ export default function useCadastroProdutos() {
     console.warn(produto.nome);
   }
 
-  function novoProduto(produto: Produto) {
-    setProdutos([...produtos, produto]);
+  async function carregarDados() {
+    const result = await AsyncStorageLib.getItem('produtos');
+    if (result !== null)
+      /* console.log(JSON.parse(result));*/ setProdutos(JSON.parse(result));
   }
 
-  // function salvarProduto(produto: Produto) {
+  async function salvarProduto(produto: Produto) {
+    const produtoRecebido = produto;
+    const produtosAtualizados = [...produtos, produtoRecebido];
+    setProdutos(produtosAtualizados);
+    await AsyncStorageLib.setItem(
+      'produtos',
+      JSON.stringify(produtosAtualizados),
+    );
+  }
+
+  // function novoProduto(produto: Produto) {
   //   setProdutos([...produtos, produto]);
+  // }
+
+  // async function salvarProduto(produto: Produto) {
+
+  //   const dadosArmazenados = await AsyncStorageLib.getItem('produtos');
+  //   const dadosArmazenadosParsed =
+  //     dadosArmazenados != null ? JSON.parse(dadosArmazenados) : null;
+
+  //   let novosDados = [];
+
+  //   if (dadosArmazenados === null) {
+  //     await AsyncStorageLib.setItem('produtos', JSON.stringify(arrayProduto));
+  //   } else {
+  //     novosDados = [...dadosArmazenados, produtoRecebido];
+  //     await AsyncStorageLib.setItem('produtos', JSON.stringify(novosDados));
+  //   }
+
+  //   Keyboard.dismiss();
+  //   /* implementar função para limpar dados do form de cadastro */
   // }
 
   return {
@@ -32,7 +65,8 @@ export default function useCadastroProdutos() {
     produtos,
     produtoSelecionado,
     produtoExcluido,
-    novoProduto,
-    // salvarProduto,
+    //  novoProduto,
+    salvarProduto,
+    carregarDados,
   };
 }
