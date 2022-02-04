@@ -1,21 +1,32 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, TextInput, Button} from 'react-native';
+import {View, StyleSheet, TextInput, Button, Alert} from 'react-native';
 import useCadastroProdutos from '../../hooks/useCadastroProdutos';
 import Produto from '../../model/Produto';
 import Entrada from './Entrada';
 
 interface CadastroProps {
-  produto: Produto;
-  novoProduto: (produto: Produto) => void;
+  produto: any;
+  salvarProduto: any;
 }
 
 export default function Cadastro(props: CadastroProps) {
-  const {produtos} = useCadastroProdutos();
-  const [id, setId] = useState(produtos.length + 1);
-  const [nome, setNome] = useState('');
-  const [estoque, setEstoque] = useState('');
-  const [valorUnitario, setValorUnitario] = useState('');
-  const valorTotal = +valorUnitario * +estoque;
+  const {
+    id,
+    setId,
+    nome,
+    setNome,
+    estoque,
+    setEstoque,
+    valorUnitario,
+    setValorUnitario,
+    valorTotal,
+    produtos,
+  } = useCadastroProdutos();
+  // const [id, setId] = useState(produtos.length + 1);
+  // const [nome, setNome] = useState('');
+  // const [estoque, setEstoque] = useState('');
+  // const [valorUnitario, setValorUnitario] = useState('');
+  // const valorTotal = +valorUnitario * +estoque;
 
   return (
     <View>
@@ -49,7 +60,7 @@ export default function Cadastro(props: CadastroProps) {
             style={styles.input}
             value={valorUnitario.toString()}
             onChangeText={setValorUnitario}
-            keyboardType="numeric"
+            keyboardType="number-pad"
           />
         </View>
         <View style={styles.valorTotal}>
@@ -64,9 +75,22 @@ export default function Cadastro(props: CadastroProps) {
           <Button
             title="Adicionar produto" /*esse botão tem que ativar o set ID +1 */
             onPress={() => {
-              props.novoProduto?.(
-                new Produto(id, nome, +estoque, +valorUnitario, valorTotal),
-              );
+              const novoProduto = {
+                id: id,
+                nome: nome,
+                estoque: estoque,
+                valorUnitario: valorUnitario,
+                valorTotal: valorTotal,
+              };
+
+              novoProduto.estoque >= 1
+                ? props.salvarProduto(novoProduto)
+                : Alert.alert(
+                    'Erro!',
+                    'Insira uma quantidade válida para o estoque.',
+                    [{text: 'OK'}],
+                  );
+
               setId(id + 1);
             }}
           />

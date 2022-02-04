@@ -8,16 +8,30 @@ import {
   Alert,
   Modal,
 } from 'react-native';
+import useCadastroProdutos from '../../hooks/useCadastroProdutos';
 import Produto from '../../model/Produto';
+import ProdutoObj from '../../model/ProdutoObj';
 import HeaderTabela from './CabecalhoTabela';
 
 interface TabelaProps {
-  produtos: Produto[];
-  produtoSelecionado: (produto: Produto) => void;
-  produtoExcluido: (produto: Produto) => void;
+  produtos: any;
 }
 
 export default function Tabela(props: TabelaProps) {
+  const {
+    id,
+    setId,
+    nome,
+    setNome,
+    estoque,
+    setEstoque,
+    valorUnitario,
+    setValorUnitario,
+    valorTotal,
+    produtos,
+    excluirProduto,
+  } = useCadastroProdutos();
+
   const [modalVisivel, setModalVisivel] = useState(false);
   const [nomeProduto, setNomeProduto] = useState('');
   const [estoqueProduto, setEstoqueProduto] = useState(0);
@@ -31,6 +45,7 @@ export default function Tabela(props: TabelaProps) {
           text: 'Sim',
           onPress() {
             console.warn(item.nome + ' excluído com sucesso.');
+            excluirProduto(item);
           },
         },
         {
@@ -69,7 +84,7 @@ export default function Tabela(props: TabelaProps) {
       </Modal>
       <FlatList
         data={props.produtos}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={(item, index) => item.id.toString()}
         ListHeaderComponent={HeaderTabela}
         renderItem={({item}) => (
           <View style={styles.linha}>
@@ -89,13 +104,21 @@ export default function Tabela(props: TabelaProps) {
               <Text>{`R$${item.valorTotal}`}</Text>
             </View>
             <View style={styles.blocoBotao}>
-              <Button
+              {/* <Button
                 title="✏️"
                 onPress={() => {
                   setModalVisivel(true);
                   setNomeProduto(item.nome);
                   setEstoqueProduto(item.estoque);
                 }}
+              /> */}
+              <Button
+                title="-"
+                onPress={item => setEstoque(item.estoque - 1)}
+              />
+              <Button
+                title="+"
+                onPress={item => setEstoque(item.estoque + 1)}
               />
               <Button
                 title="🗑️"
@@ -138,7 +161,7 @@ const styles = StyleSheet.create({
   },
   blocoBotao: {
     flexDirection: 'row',
-    width: 90,
+    width: 100,
     justifyContent: 'space-between',
     height: 50,
     backgroundColor: '#B0B2FF',
