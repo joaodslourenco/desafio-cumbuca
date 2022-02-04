@@ -1,11 +1,13 @@
+
 import AsyncStorageLib from '@react-native-async-storage/async-storage';
 import {useState} from 'react';
 import {Keyboard} from 'react-native';
-
+        
 import Produto from '../model/Produto';
 import ProdutoObj from '../model/ProdutoObj';
 
 export default function useCadastroProdutos() {
+
   let listaProdutos1: any = [];
 
   const [produto, setProduto] = useState({
@@ -55,6 +57,7 @@ export default function useCadastroProdutos() {
     );
     Keyboard.dismiss();
   }
+
 
   /* verificar amanhã*/
   // async function atualizarProduto({item}) {
