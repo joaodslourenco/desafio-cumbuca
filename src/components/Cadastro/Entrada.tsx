@@ -10,7 +10,7 @@ import {
 interface EntradaProps {
   placeholder: string;
   style: TextStyle;
-  value: Readonly<string>;
+  value: any;
   keyboardType?: KeyboardTypeOptions;
   editable?: boolean;
   onChangeText?: (valor: any) => void;

@@ -1,12 +1,13 @@
 import AsyncStorageLib from '@react-native-async-storage/async-storage';
 import {useState} from 'react';
 import {Keyboard} from 'react-native';
-import listaProdutos from '../data/listaProdutos';
 
 import Produto from '../model/Produto';
 import ProdutoObj from '../model/ProdutoObj';
 
 export default function useCadastroProdutos() {
+  let listaProdutos1: any = [];
+
   const [produto, setProduto] = useState({
     id: 1,
     nome: '',
@@ -14,14 +15,29 @@ export default function useCadastroProdutos() {
     valorUnitario: 0,
     valorTotal: 0,
   });
-  const [produtos, setProdutos] = useState(listaProdutos);
+  const [produtos, setProdutos] = useState(listaProdutos1);
+
+  /* cadastro */
+  const [id, setId] = useState(produtos.length + 1);
+  const [nome, setNome] = useState('');
+  const [estoque, setEstoque] = useState(0);
+  const [valorUnitario, setValorUnitario] = useState('');
+  const valorTotal = +valorUnitario * +estoque;
 
   function produtoSelecionado(produto: Produto) {
     setProduto(produto);
   }
 
-  function produtoExcluido(produto: Produto) {
-    console.warn(produto.nome);
+  async function excluirProduto(produto: any) {
+    const result = await AsyncStorageLib.getItem('produtos');
+    let produtos = [];
+    if (result !== null) produtos = JSON.parse(result);
+
+    const produtosAtualizados = produtos.filter(p => p.id !== produto.id);
+    await AsyncStorageLib.setItem(
+      'produtos',
+      JSON.stringify(produtosAtualizados),
+    );
   }
 
   async function carregarDados() {
@@ -37,36 +53,42 @@ export default function useCadastroProdutos() {
       'produtos',
       JSON.stringify(produtosAtualizados),
     );
+    Keyboard.dismiss();
   }
 
-  // function novoProduto(produto: Produto) {
-  //   setProdutos([...produtos, produto]);
-  // }
+  /* verificar amanhã*/
+  // async function atualizarProduto({item}) {
+  //   const result = await AsyncStorageLib.getItem('produtos');
+  //   let produtos = [];
+  //   if (result != null) produtos = JSON.parse(result);
 
-  // async function salvarProduto(produto: Produto) {
-
-  //   const dadosArmazenados = await AsyncStorageLib.getItem('produtos');
-  //   const dadosArmazenadosParsed =
-  //     dadosArmazenados != null ? JSON.parse(dadosArmazenados) : null;
-
-  //   let novosDados = [];
-
-  //   if (dadosArmazenados === null) {
-  //     await AsyncStorageLib.setItem('produtos', JSON.stringify(arrayProduto));
-  //   } else {
-  //     novosDados = [...dadosArmazenados, produtoRecebido];
-  //     await AsyncStorageLib.setItem('produtos', JSON.stringify(novosDados));
-  //   }
-
-  //   Keyboard.dismiss();
-  //   /* implementar função para limpar dados do form de cadastro */
+  //   const novosProdutos = produtos.filter(p => {
+  //     if (p.id === produto.id) {
+  //       p.nome = nome;
+  //       p.estoque = estoque;
+  //       p.valorUnitario = valorUnitario;
+  //       p.valorTotal = valorTotal;
+  //     }
+  //     return p;
+  //   });
+  //   setProdutos(novosProdutos);
+  //   await AsyncStorageLib.setItem('produtos', JSON.stringify(novosProdutos));
   // }
 
   return {
+    id,
+    setId,
+    nome,
+    setNome,
+    estoque,
+    setEstoque,
+    valorUnitario,
+    setValorUnitario,
+    valorTotal,
     produto,
     produtos,
     produtoSelecionado,
-    produtoExcluido,
+    excluirProduto,
     //  novoProduto,
     salvarProduto,
     carregarDados,

@@ -12,7 +12,7 @@ export default function src() {
     produto,
     produtos,
     salvarProduto,
-    produtoExcluido,
+    excluirProduto,
     produtoSelecionado,
     carregarDados,
   } = useCadastroProdutos();
@@ -21,21 +21,17 @@ export default function src() {
     await AsyncStorageLib.clear();
   }
 
-  clearAll();
+  // clearAll();
   useEffect(() => {
     carregarDados();
-  }, []);
+  }, [produtos]);
 
   return (
     <View style={styles.layout}>
       <Header tela="Controle de Estoque" />
       <Busca />
       <Cadastro produto={produto} salvarProduto={salvarProduto} />
-      <Tabela
-        produtos={produtos}
-        produtoSelecionado={produtoSelecionado}
-        produtoExcluido={produtoExcluido}
-      />
+      <Tabela produtos={produtos} />
     </View>
   );
 }

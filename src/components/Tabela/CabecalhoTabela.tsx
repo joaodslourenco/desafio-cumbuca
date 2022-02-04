@@ -21,7 +21,7 @@ export default function HeaderTabela() {
           <Text style={styles.cabecalho}>Valor total</Text>
         </View>
         <View style={styles.blocoBotao}>
-          <Text style={styles.cabecalho}>Gerenciar</Text>
+          <Text style={styles.cabecalho}>Gerenciar estoque</Text>
         </View>
       </View>
     </View>
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   },
   blocoBotao: {
     flexDirection: 'row',
-    width: 90,
+    width: 100,
     justifyContent: 'center',
     alignItems: 'center',
     height: 50,
